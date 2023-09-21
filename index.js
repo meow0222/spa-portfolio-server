@@ -1,0 +1,166 @@
+const express = require('express'); // express module to create a server application
+const cors = require('cors'); // cors module to handle Preflight requests
+const bodyParser = require('body-parser'); // body-parser module to parse JSON objects
+const fs = require('fs'); // fs library to read and write files
+
+const app = express(); // instance of an Express object
+const port = 3000; // the port the server will be listening on
+const textBodyParser = bodyParser.text({ limit: '20mb', defaultCharset: 'utf-8'});
+
+// import our custom modules here:
+const { authenticateUser } = require('./my_modules/login.js');
+const {  addUser } = require('./my_modules/utility.js');
+
+app.use(cors({
+    origin: 'http://localhost:5000' 
+}));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
+
+app.options('/login', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:5000');
+    res.header('Access-Control-Allow-Headers', 'task'); // Allow the 'task 'header
+    res.header('Access-Control-Allow-Methods', 'GET'); // Allow the GET method
+    res.header('Access-Control-Allow-Methods', 'POST'); // Allow the POST method
+    res.sendStatus(200);
+});
+
+app.get('/login', textBodyParser, async function (req, res) {
+    // print the HTTP Request Headers
+    console.log('req.headers: ', req.headers); 
+
+    const reqOrigin = req.headers['origin']; // get the origin of the request
+    const reqTask = req.headers['task']; // get the task of the request
+
+    console.log("Processing request from " + reqOrigin + " for route " + req.url + " with method " + req.method + " for task: " + reqTask);
+
+    // TASK Check
+    if (reqTask === 'login') {
+        try {
+            const loginResult = await authenticateUser(req);
+            console.log('authenticateUser() result: ', loginResult);
+
+            if (loginResult == true) {
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                // allow client to access the custom 'request-result' header:
+                res.setHeader('Access-Control-Expose-Headers', 'request-result'); 
+                // set the custom header 'request-result'
+                res.setHeader('request-result', 'Request ' + req.method + ' was received successfully.');
+                res.status(200).send("Login Successful");
+            } else {
+                res.status(403).send("Login Failed"); // 403 Forbidden Access
+            }
+        } catch (error) {
+            console.log('authenticateUser() error:', error);
+            res.status(500).send("Server Error");
+        }
+    }
+
+    res.end();
+
+    /* 
+    // remade and moved to login.js
+    const { username, password } = req.query;
+    fs.readFile('/data/users.json', 'utf8', (err, data) => {
+        if (err) {
+            res.status(500).send("Server error");
+            return;
+        }
+
+        const users = JSON.parse(data);
+        if (users[username] && users[username].password === password) {
+            res.send("Login successful");
+        } else {
+            res.send("Login failed");
+        }
+    });
+    */
+});
+
+app.get('/home', async function (req, res) {
+    // print the HTTP Request Headers
+    console.log('req.headers: ', req.headers); 
+
+    const reqOrigin = req.headers['origin']; // get the origin of the request
+    const reqTask = req.headers['task']; // get the task of the request
+
+    console.log("Processing request from " + reqOrigin + " for route " + req.url + " with method " + req.method + " for task: " + reqTask);
+
+    // TASK Check
+    if (reqTask === 'spin-btn') {
+        try {
+            // get a degree between 0 and 360 at random:
+            const rotation = getRandomInt(0, 360);
+            console.log("getRandomInt() returned rotation: ", rotation); 
+            const slice = getRouletteSlice(rotation);
+            console.log("getRouletteSlice() returned slice: ", slice); 
+
+            // readCsvFile returns an array of arrays with the data from the .csv
+            const csvFileData = await readCsvFile('./data/roulette-rewards.csv');
+            console.log('readCsvFile() returned csvFileData: ', csvFileData);
+
+            const reward = getReward(slice, csvFileData);
+            console.log('getReward() returned reward: ', reward);
+
+            // const csvStr = await parseObjToCsvString(csvFileData);
+            // console.log('parseObjToCsvString() returned csvStr: ');
+            // console.log(csvStr);
+            // console.log('typeof(csvStr): ', typeof(csvStr));
+
+            // prepare and send the response to the client:
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            // allow client to access the custom 'request-result' header:
+            res.setHeader('Access-Control-Expose-Headers', 'request-result'); 
+            // set the custom header 'request-result'
+            res.setHeader('request-result', 'Request ' + req.method + ' was received successfully.');
+            res.status(200).json({ rotation, reward });
+        } catch (error) {
+            console.log('There was a problem responding with a rotation: ', error);
+            res.status(500).send("Server Error");
+        }
+    }
+
+
+    
+});
+
+app.post('/login', async function (req, res) {
+    // print the HTTP Request Headers
+    console.log('req.headers: ', req.headers); 
+
+    const reqOrigin = req.headers['origin']; // get the origin of the request
+    const reqTask = req.headers['task']; // get the task of the request
+    const reqBody = req.body; // get the request data
+
+    console.log("Processing request from " + reqOrigin + " for route " + req.url + " with method " + req.method + " for task: " + reqTask);
+    console.log("req.body: ", req.body);
+    console.log("req.body.username: ", req.body.username);
+    console.log("req.body.password: ", req.body.password);
+
+    // TASK Check
+    if (reqTask === 'signup') {
+        try {
+            const filePath = './data/users.json';
+            const username = reqBody.username;
+            const password = reqBody.password;
+            await addUser(filePath, username, password);
+
+        } catch (error) {
+            console.log('There was a problem responding with a rotation: ', error);
+            res.status(500).send("Server Error");
+        }
+    }
+
+});
+
+// Initialize the Server, and Listen to connection requests
+app.listen(port, (err) => {
+    if (err) {
+        console.log("There was a problem: ", err);
+        return;
+    }
+    console.log(`Server listening on http://localhost:${port}`);
+})
