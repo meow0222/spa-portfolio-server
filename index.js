@@ -9,7 +9,7 @@ const textBodyParser = bodyParser.text({ limit: '20mb', defaultCharset: 'utf-8'}
 
 // import our custom modules here:
 const { authenticateUser } = require('./my_modules/login.js');
-const {  addUser } = require('./my_modules/utility.js');
+const {  addUser, updatePassword } = require('./my_modules/utility.js');
 
 app.use(cors({
     origin: 'http://localhost:5000' 
@@ -25,6 +25,7 @@ app.options('/login', (req, res) => {
     res.header('Access-Control-Allow-Headers', 'task'); // Allow the 'task 'header
     res.header('Access-Control-Allow-Methods', 'GET'); // Allow the GET method
     res.header('Access-Control-Allow-Methods', 'POST'); // Allow the POST method
+    res.header('Access-Control-Allow-Methods', 'PUT'); // Allow the POST method
     res.sendStatus(200);
 });
 
@@ -151,6 +152,34 @@ app.post('/login', async function (req, res) {
         } catch (error) {
             console.log('There was a problem responding with a rotation: ', error);
             res.status(500).send("Server Error");
+        }
+    }
+
+});
+
+app.put('/login', async function (req, res) {
+    // print the HTTP Request Headers
+    console.log('req.headers: ', req.headers); 
+
+    const reqOrigin = req.headers['origin']; // get the origin of the request
+    const reqTask = req.headers['task']; // get the task of the request
+    const reqBody = req.body; // get the request data
+
+    console.log("Processing request from " + reqOrigin + " for route " + req.url + " with method " + req.method + " for task: " + reqTask);
+    console.log("req.body: ", req.body);
+    console.log("req.body.username: ", req.body.username);
+    console.log("req.body.newPassword: ", req.body.newPassword);
+
+    // TASK Check
+    if (reqTask === 'updateUser') {
+        try {
+            const filePath = './data/users.json';
+            const username = reqBody.username;
+            const newPassword = reqBody.newPassword;
+            await updatePassword(filePath, username, newPassword);
+            res.status(200).send(res)
+        } catch (error) {
+            res.status(500).send(res);
         }
     }
 
