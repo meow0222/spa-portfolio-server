@@ -4,7 +4,8 @@ const userData = './data/users.json'; // path to the users.json
 async function authenticateUser(req) {
     // get the value for the 'username' and 'password'
     // keys from the request query string
-    const { username, password } = req.query;
+    const username = req.query.username;
+    const password = req.query.password;
 
     return new Promise((resolve, reject) => {
         fs.readFile(userData, 'utf-8', (err, fileData) => {

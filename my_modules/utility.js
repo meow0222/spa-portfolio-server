@@ -18,7 +18,7 @@ async function addUser(filePath, username, password) {
                 password: password
             };
 
-            fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
+            fs.writeFileSync(filePath, JSON.stringify(users));
             console.log(`User ${username} was added to users.json`);
         } else {
             console.log(`Username ${username} already exists!`);
