@@ -32,24 +32,29 @@ app.options('/login', (req, res) => {
 app.get('/login', textBodyParser, async function (req, res) {
     // print the HTTP Request Headers
     console.log('req.headers: ', req.headers); 
-
+    
     const reqOrigin = req.headers['origin']; // get the origin of the request
     const reqTask = req.headers['task']; // get the task of the request
+    const reqUserName = req.headers['username']
 
-    console.log("Processing request from " + reqOrigin + " for route " + req.url + " with method " + req.method + " for task: " + reqTask);
+    console.log("Processing request from " + reqOrigin + " for route " + req.url + " with method " + req.method + " for task: " + reqTask + reqUserName);
 
     // TASK Check
     if (reqTask === 'login') {
         try {
             const loginResult = await authenticateUser(req);
             console.log('authenticateUser() result: ', loginResult);
-
             if (loginResult == true) {
+                res.setHeader('Access-Control-Expose-Headers', 'request-result, username'); // 'username' ヘッダーを公開するように設定
+
                 res.setHeader('Access-Control-Allow-Origin', '*');
                 // allow client to access the custom 'request-result' header:
+
                 res.setHeader('Access-Control-Expose-Headers', 'request-result'); 
                 // set the custom header 'request-result'
                 res.setHeader('request-result', 'Request ' + req.method + ' was received successfully.');
+                res.setHeader('username', username); // 'username' ヘッダーを実際のユーザー名で設定
+
                 res.status(200).send("Login Successful");
             } else {
                 res.status(403).send("Login Failed"); // 403 Forbidden Access
@@ -81,52 +86,7 @@ app.get('/login', textBodyParser, async function (req, res) {
     */
 });
 
-app.get('/home', async function (req, res) {
-    // print the HTTP Request Headers
-    console.log('req.headers: ', req.headers); 
 
-    const reqOrigin = req.headers['origin']; // get the origin of the request
-    const reqTask = req.headers['task']; // get the task of the request
-
-    console.log("Processing request from " + reqOrigin + " for route " + req.url + " with method " + req.method + " for task: " + reqTask);
-
-    // TASK Check
-    if (reqTask === 'spin-btn') {
-        try {
-            // get a degree between 0 and 360 at random:
-            const rotation = getRandomInt(0, 360);
-            console.log("getRandomInt() returned rotation: ", rotation); 
-            const slice = getRouletteSlice(rotation);
-            console.log("getRouletteSlice() returned slice: ", slice); 
-
-            // readCsvFile returns an array of arrays with the data from the .csv
-            const csvFileData = await readCsvFile('./data/roulette-rewards.csv');
-            console.log('readCsvFile() returned csvFileData: ', csvFileData);
-
-            const reward = getReward(slice, csvFileData);
-            console.log('getReward() returned reward: ', reward);
-
-            // const csvStr = await parseObjToCsvString(csvFileData);
-            // console.log('parseObjToCsvString() returned csvStr: ');
-            // console.log(csvStr);
-            // console.log('typeof(csvStr): ', typeof(csvStr));
-
-            // prepare and send the response to the client:
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            // allow client to access the custom 'request-result' header:
-            res.setHeader('Access-Control-Expose-Headers', 'request-result'); 
-            // set the custom header 'request-result'
-            res.setHeader('request-result', 'Request ' + req.method + ' was received successfully.');
-            res.status(200).json({ rotation, reward });
-        } catch (error) {
-            console.log('There was a problem responding with a rotation: ', error);
-            res.status(500).send("Server Error");
-        }
-    }
-
-
-    
-});
 
 app.post('/login', async function (req, res) {
     // print the HTTP Request Headers
