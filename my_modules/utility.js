@@ -28,7 +28,9 @@ async function addUser(filePath, username, password) {
 
     });
 
-}async function updatePassword(filePath, username, newPassword) {
+}
+
+async function updatePassword(filePath, username, newPassword) {
     return new Promise((resolve, reject) => {
         const fileData = fs.readFileSync(filePath);
         let users;
