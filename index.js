@@ -35,9 +35,9 @@ app.get('/login', textBodyParser, async function (req, res) {
     
     const reqOrigin = req.headers['origin']; // get the origin of the request
     const reqTask = req.headers['task']; // get the task of the request
-    const reqUserName = req.headers['username']
+    // const reqUserName = req.headers['username'];
 
-    console.log("Processing request from " + reqOrigin + " for route " + req.url + " with method " + req.method + " for task: " + reqTask + reqUserName);
+    console.log("Processing request from " + reqOrigin + " for route " + req.url + " with method " + req.method + " for task: " + reqTask);
 
     // TASK Check
     if (reqTask === 'login') {
@@ -53,7 +53,7 @@ app.get('/login', textBodyParser, async function (req, res) {
                 res.setHeader('Access-Control-Expose-Headers', 'request-result'); 
                 // set the custom header 'request-result'
                 res.setHeader('request-result', 'Request ' + req.method + ' was received successfully.');
-                res.setHeader('username', username); // 'username' ヘッダーを実際のユーザー名で設定
+                // res.setHeader('username', username); // 'username' ヘッダーを実際のユーザー名で設定
 
                 res.status(200).send("Login Successful");
             } else {
