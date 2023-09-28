@@ -18,6 +18,8 @@ app.use(cors({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use(express.static('public'));
+
 
 
 app.options('/login', (req, res) => {
@@ -144,6 +146,28 @@ app.put('/login', async function (req, res) {
     }
 
 });
+
+
+
+
+app.get('/data/products', async (req, res) => {
+    try {
+      const productsData = await fs.promises.readFile('data/products.json');
+      const products = JSON.parse(productsData);
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.json(products);
+    } catch (error) {
+      console.error('Error loading todos:', error);
+      res.status(500).json({ error: 'Error loading todos' });
+    }
+});
+
+
+
+
+
+
+
 
 // Initialize the Server, and Listen to connection requests
 app.listen(port, (err) => {
