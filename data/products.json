@@ -1,0 +1,112 @@
+{
+    "products": [
+        {   
+            "id": "0",
+            "name": "Sweat",
+            "size": "S  M  L  XL",
+            "price": "CAD: 60$",
+            "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
+            "images":[
+                "imgs/crestfactor-24.jpg",
+                "imgs/crestfactor-25.jpg",
+                "imgs/crestfactor-8.jpg"
+            ]
+        },
+        {
+            "id": "1",
+            "name": "Sweat",
+            "size": "S  M  L  XL",
+            "price": "CAD: 60$",
+            "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
+            "images": [
+                "imgs/crestfactor-5.jpg",
+                "imgs/crestfactor-4.jpg",
+                "imgs/crestfactor-9.jpg"
+            ]
+        },
+        {
+            "id": "2",
+            "name": "Hoodie",
+            "size": "S  M  L  XL",
+            "price": "CAD: 66$",
+            "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
+            "images": [
+                "imgs/crestfactor-13.jpg",
+                "imgs/crestfactor-32.jpg",
+                "imgs/crestfactor-26.jpg"
+            ]
+        },
+        {
+            "id": "3",
+            "name": "Sweat",
+            "size": "S  M  L  XL",
+            "price": "CAD: 60$",
+            "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
+            "images":[
+                "imgs/crestfactor-14.jpg",
+                "imgs/crestfactor-6.jpg",
+                "imgs/crestfactor-8.jpg"
+            ]
+        },
+        {
+            "id": "4",
+            "name": "Sweat",
+            "size": "S  M  L  XL",
+            "price": "CAD: 60$",
+            "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
+            "images":[
+                "imgs/crestfactor-24.jpg",
+                "imgs/crestfactor-25.jpg",
+                "imgs/crestfactor-8.jpg"
+            ]
+        },
+        {
+            "id": "5",
+            "name": "Sweat",
+            "size": "S  M  L  XL",
+            "price": "CAD: 60$",
+            "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
+            "images":[
+                "imgs/crestfactor-27.jpg",
+                "imgs/crestfactor-28.jpg",
+                "imgs/crestfactor-8.jpg"
+            ]
+        },
+        {
+            "id": "6",
+            "name": "Sweat",
+            "size": "S  M  L  XL",
+            "price": "CAD: 60$",
+            "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
+            "images":[
+                "imgs/crestfactor-42.jpg",
+                "imgs/crestfactor-43.jpg",
+                "imgs/crestfactor-8.jpg"
+            ]
+        },
+        {
+            "id": "7",
+            "name": "Sweat",
+            "size": "S  M  L  XL",
+            "price": "CAD: 60$",
+            "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
+            "images":[
+                "imgs/crestfactor-12.jpg",
+                "imgs/crestfactor-11.jpg",
+                "imgs/crestfactor-8.jpg"
+            ]
+        },
+        {
+            "id": "8",
+            "name": "Sweat",
+            "size": "S  M  L  XL",
+            "price": "CAD: 60$",
+            "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
+            "images":[
+                "imgs/crestfactor-23.jpg",
+                "imgs/crestfactor-26.jpg",
+                "imgs/crestfactor-8.jpg"
+            ]
+        }
+    ]
+}
