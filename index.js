@@ -47,6 +47,7 @@ app.get('/login', textBodyParser, async function (req, res) {
             const loginResult = await authenticateUser(req);
             console.log('authenticateUser() result: ', loginResult);
             if (loginResult == true) {
+
                 res.setHeader('Access-Control-Expose-Headers', 'request-result, username'); // 'username' ヘッダーを公開するように設定
 
                 res.setHeader('Access-Control-Allow-Origin', '*');
@@ -57,7 +58,8 @@ app.get('/login', textBodyParser, async function (req, res) {
                 res.setHeader('request-result', 'Request ' + req.method + ' was received successfully.');
                 // res.setHeader('username', username); // 'username' ヘッダーを実際のユーザー名で設定
 
-                res.status(200).send("Login Successful");
+                res.status(200).send({message : "Login Successful",
+                                      currentUser : req.query.username});
             } else {
                 res.status(403).send("Login Failed"); // 403 Forbidden Access
             }
