@@ -19,7 +19,7 @@ async function addUser(filePath, username, password) {
                 cart: cart = new Array(97)
             };
 
-            fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
+            fs.writeFileSync(filePath, JSON.stringify(users));
             console.log(`User ${username} was added to users.json`);
         } else {
             console.log(`Username ${username} already exists!`);
@@ -29,7 +29,9 @@ async function addUser(filePath, username, password) {
 
     });
 
-}async function updatePassword(filePath, username, newPassword) {
+}
+
+async function updatePassword(filePath, username, newPassword) {
     return new Promise((resolve, reject) => {
         const fileData = fs.readFileSync(filePath);
         let users;
