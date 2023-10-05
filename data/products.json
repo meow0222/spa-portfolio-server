@@ -50,7 +50,7 @@
         },
         {
             "id": "4",
-            "name": "Sweat",
+            "name": "Hoodie",
             "size": "S  M  L  XL",
             "price": "CAD: 60$",
             "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
@@ -62,9 +62,9 @@
         },
         {
             "id": "5",
-            "name": "Sweat",
+            "name": "T-Shirts",
             "size": "S  M  L  XL",
-            "price": "CAD: 60$",
+            "price": "CAD: 25$",
             "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
             "images": [
                 "imgs/crestfactor-27.jpg",
@@ -74,9 +74,9 @@
         },
         {
             "id": "6",
-            "name": "Sweat",
+            "name": "T-Shirts",
             "size": "S  M  L  XL",
-            "price": "CAD: 60$",
+            "price": "CAD: 25$",
             "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
             "images": [
                 "imgs/crestfactor-42.jpg",
@@ -86,9 +86,9 @@
         },
         {
             "id": "7",
-            "name": "Sweat",
+            "name": "Top",
             "size": "S  M  L  XL",
-            "price": "CAD: 60$",
+            "price": "CAD: 55$",
             "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
             "images": [
                 "imgs/crestfactor-12.jpg",
@@ -98,7 +98,7 @@
         },
         {
             "id": "8",
-            "name": "Sweat",
+            "name": "Cap",
             "size": "S  M  L  XL",
             "price": "CAD: 60$",
             "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officiis vitae ea, facere commodi nam magni eos esse ullam dignissimos molestias! Repellat architecto necessitatibus voluptatibus libero facilis quos consequuntur minus maiores.",
