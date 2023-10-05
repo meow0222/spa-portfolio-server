@@ -81,7 +81,7 @@ app.get('/login', textBodyParser, async function (req, res) {
     */
 });
 
-app.get('/home', async function (req, res) {
+app.get('/x`', async function (req, res) {
     // print the HTTP Request Headers
     console.log('req.headers: ', req.headers); 
 
