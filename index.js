@@ -9,6 +9,7 @@ const textBodyParser = bodyParser.text({ limit: '20mb', defaultCharset: 'utf-8'}
 
 // import our custom modules here:
 const { authenticateUser } = require('./my_modules/login.js');
+const { addToCart } = require('./my_modules/login.js');
 const {  addUser, updatePassword } = require('./my_modules/utility.js');
 
 app.use(cors({
@@ -23,6 +24,15 @@ app.use(express.static('public'));
 
 
 app.options('/login', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:5000');
+    res.header('Access-Control-Allow-Headers', 'task'); // Allow the 'task 'header
+    res.header('Access-Control-Allow-Methods', 'GET'); // Allow the GET method
+    res.header('Access-Control-Allow-Methods', 'POST'); // Allow the POST method
+    res.header('Access-Control-Allow-Methods', 'PUT'); // Allow the POST method
+    res.sendStatus(200);
+});
+
+app.options('/cart', (req, res) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:5000');
     res.header('Access-Control-Allow-Headers', 'task'); // Allow the 'task 'header
     res.header('Access-Control-Allow-Methods', 'GET'); // Allow the GET method
@@ -149,9 +159,6 @@ app.put('/login', async function (req, res) {
 
 });
 
-
-
-
 app.get('/data/products', async (req, res) => {
     try {
       const productsData = await fs.promises.readFile('data/products.json');
@@ -164,7 +171,31 @@ app.get('/data/products', async (req, res) => {
     }
 });
 
+app.put('/cart', async (req, res) => {
+    console.log('req.headers: ', req.headers); 
 
+    const reqOrigin = req.headers['origin']; // get the origin of the request
+    const reqTask = req.headers['task']; // get the task of the request
+    const reqBody = req.body; // get the request data
+
+    console.log("Processing request from " + reqOrigin + " for route " + req.url + " with method " + req.method + " for task: " + reqTask);
+    console.log("req.body: ", req.body);
+    console.log("req.body.id: ", req.body.id);
+    console.log("req.body.quantity: ", req.body.quantity);
+
+    if(reqTask === 'addtocart') {
+        try {
+            const id = reqBody.id;
+            const quantity = reqBody.quantity;
+            const username = reqBody.username;
+            await addToCart(username, id, quantity);
+            res.status(200).send(res);
+      
+        } catch(error) {
+            res.status(500).send(res);
+        }
+    }
+});
 
 
 
