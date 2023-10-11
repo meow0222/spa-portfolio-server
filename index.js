@@ -9,7 +9,7 @@ const textBodyParser = bodyParser.text({ limit: '20mb', defaultCharset: 'utf-8'}
 
 // import our custom modules here:
 const { authenticateUser } = require('./my_modules/login.js');
-const { addToCart } = require('./my_modules/login.js');
+const { addToCart, removeFromCart } = require('./my_modules/cart.js');
 const {  addUser, updatePassword } = require('./my_modules/utility.js');
 
 app.use(cors({
@@ -176,7 +176,6 @@ app.put('/cart', async (req, res) => {
 
     const reqOrigin = req.headers['origin']; // get the origin of the request
     const reqTask = req.headers['task']; // get the task of the request
-    const reqBody = req.body; // get the request data
 
     console.log("Processing request from " + reqOrigin + " for route " + req.url + " with method " + req.method + " for task: " + reqTask);
     console.log("req.body: ", req.body);
@@ -185,10 +184,30 @@ app.put('/cart', async (req, res) => {
 
     if(reqTask === 'addtocart') {
         try {
-            const id = reqBody.id;
-            const quantity = reqBody.quantity;
-            const username = reqBody.username;
-            await addToCart(username, id, quantity);
+            console.log('lal');
+            console.log('zaz');
+            const id = req.body.id;
+            const quantity = req.body.quantity;
+            const username = req.body.username;
+            const filePath = './data/users.json';
+            console.log('bab');
+            await addToCart(username, id, quantity, filePath);
+            res.status(200).send(res);
+      
+        } catch(error) {
+            res.status(500).send(res);
+        }
+    }
+    if(reqTask === 'removefromcart') {
+        try {
+            console.log('lal');
+            console.log('zaz');
+            const id = req.body.id;
+            const quantity = req.body.quantity;
+            const username = req.body.username;
+            const filePath = './data/users.json';
+            console.log('bab');
+            await addToCart(username, id, quantity, filePath);
             res.status(200).send(res);
       
         } catch(error) {
@@ -196,11 +215,6 @@ app.put('/cart', async (req, res) => {
         }
     }
 });
-
-
-
-
-
 
 // Initialize the Server, and Listen to connection requests
 app.listen(port, (err) => {
