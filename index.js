@@ -12,8 +12,9 @@ const { authenticateUser } = require('./my_modules/login.js');
 const {  addUser, updatePassword } = require('./my_modules/utility.js');
 
 app.use(cors({
-    origin: 'http://localhost:5000' 
+    origin: 'http://localhost:5000',
 }));
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -57,6 +58,7 @@ app.get('/login', textBodyParser, async function (req, res) {
                 // set the custom header 'request-result'
                 res.setHeader('request-result', 'Request ' + req.method + ' was received successfully.');
                 // res.setHeader('username', username); // 'username' ヘッダーを実際のユーザー名で設定
+                res.cookie('myCookie', 'Hello, World!', { maxAge: 3600000 }); // Set a cookie wit
 
                 res.status(200).send({message : "Login Successful",
                                       currentUser : req.query.username});
