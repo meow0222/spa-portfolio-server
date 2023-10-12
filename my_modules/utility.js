@@ -16,7 +16,7 @@ async function addUser(filePath, username, password) {
         if (!users[username]) {
             users[username] = {
                 password: password,
-                cart: cart = new Array(97)
+                cart: cart = new Array(17)
             };
 
             fs.writeFileSync(filePath, JSON.stringify(users));

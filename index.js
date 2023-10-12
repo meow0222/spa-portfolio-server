@@ -33,7 +33,7 @@ app.options('/login', (req, res) => {
 });
 
 app.options('/cart', (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5000');
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'task'); // Allow the 'task 'header
     res.header('Access-Control-Allow-Methods', 'GET'); // Allow the GET method
     res.header('Access-Control-Allow-Methods', 'POST'); // Allow the POST method
@@ -184,35 +184,38 @@ app.put('/cart', async (req, res) => {
 
     if(reqTask === 'addtocart') {
         try {
-            console.log('lal');
-            console.log('zaz');
             const id = req.body.id;
             const quantity = req.body.quantity;
             const username = req.body.username;
             const filePath = './data/users.json';
-            console.log('bab');
             await addToCart(username, id, quantity, filePath);
-            res.status(200).send(res);
-      
+            res.status(200);     
         } catch(error) {
             res.status(500).send(res);
         }
     }
-    if(reqTask === 'removefromcart') {
+    if(reqTask === 'rmfromcart') {
         try {
-            console.log('lal');
-            console.log('zaz');
             const id = req.body.id;
-            const quantity = req.body.quantity;
             const username = req.body.username;
             const filePath = './data/users.json';
-            console.log('bab');
-            await addToCart(username, id, quantity, filePath);
-            res.status(200).send(res);
-      
+            await removeFromCart(username, id, filePath);
+            res.status(200);
         } catch(error) {
             res.status(500).send(res);
         }
+    }
+});
+
+app.get('/cart', async (req, res) => {
+    if(req.headers['task'] === 'loadcart'){
+        try {
+            const productsData = await fs.promises.readFile('data/products.json');
+            const products = JSON.parse(productsData);
+            res.json(products);
+        } catch (error) {
+            res.status(500);
+        }      
     }
 });
 
