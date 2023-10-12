@@ -9,7 +9,7 @@ const textBodyParser = bodyParser.text({ limit: '20mb', defaultCharset: 'utf-8'}
 
 // import our custom modules here:
 const { authenticateUser } = require('./my_modules/login.js');
-const { addToCart, removeFromCart } = require('./my_modules/cart.js');
+const { addToCart, removeFromCart, loadCart } = require('./my_modules/cart.js');
 const {  addUser, updatePassword } = require('./my_modules/utility.js');
 
 app.use(cors({
@@ -210,11 +210,12 @@ app.put('/cart', async (req, res) => {
 });
 
 app.get('/cart', async (req, res) => {
+    const username = req.query.username;
     if(req.headers['task'] === 'loadcart'){
         try {
-            const productsData = await fs.promises.readFile('data/products.json');
-            const products = JSON.parse(productsData);
-            res.json(products);
+            const cart = loadCart(username);
+            console.log(cart);
+            res.status(200).send(cart);
         } catch (error) {
             res.status(500);
         }      
