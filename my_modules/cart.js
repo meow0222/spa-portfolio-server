@@ -49,13 +49,23 @@ async function removeFromCart(username, id, filePath){
     });
 }
 
-async function loadCart(username){
+function loadCart(username){
     let users = JSON.parse(fs.readFileSync('./data/users.json'));
+    let products = JSON.parse(fs.readFileSync('./data/products.json'));
     let cart = users[username].cart;
     let resCart = [];
-    // for(let i = 0; i < (cart.lenght); i++) {
-    //     if(cart)
-    // }
+    console.log(cart.length);
+    try{
+        for(let i = 0; i < (cart.length); i++) {
+            if(cart[i] != null) {
+                resCart.push(`<li id="cartLi"><b>Name: ${products.products[i].name}  </b><b>Price: ${products.products[i].price}  </b><b>Quantity: ${cart[i]}  </b></li>`);
+            }
+        }    
+    } catch(error) {
+        console.log(error);
+    }
+    resCart = JSON.stringify(resCart);
+    return(resCart);
 }   
 
 module.exports = {
